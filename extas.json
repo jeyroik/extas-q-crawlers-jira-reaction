@@ -8,7 +8,7 @@
   ],
   "plugins": [
     {
-      "class": "extas\\components\\plugins\\PluginInstallJiraReactionIndex",
+      "class": "extas\\components\\plugins\\PluginInstallJiraReactionRates",
       "stage": "extas.install"
     },
     {
