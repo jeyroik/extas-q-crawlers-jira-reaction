@@ -96,6 +96,10 @@ class CrawlerJiraReaction extends Crawler
             JiraSearchJQL::CONDITION__LOWER,
             JiraSearchJQL::DATE__END_OF_MONTH,
             -1
+        )->updatedDate(
+            JiraSearchJQL::CONDITION__GREATER,
+            JiraSearchJQL::DATE__START_OF_MONTH,
+            -1
         );
 
         $config = $this->cfg();
