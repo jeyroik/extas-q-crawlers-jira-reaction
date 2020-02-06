@@ -10,7 +10,7 @@ return [
             I::FIELD__TO => 'In progress'
         ],
         I::FIELD__RESOLVED => [
-            I::FIELD__FROM => 'Done',
+            I::FIELD__FROM => 'Готово',
             I::FIELD__TO => 'Approved'
         ]
     ]
