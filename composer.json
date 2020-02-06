@@ -1,0 +1,15 @@
+{
+  "name": "jeyroik/extas-reaction-crawlers-jira",
+  "description": "Jira reaction crawler package",
+  "require": {
+    "guzzlehttp/guzzle": "^6.3",
+    "jeyroik/extas-installer": "*",
+    "jeyroik/extas-q-crawlers": "*",
+    "jeyroik/extas-q-crawlers-jira": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "extas\\": "src/"
+    }
+  }
+}

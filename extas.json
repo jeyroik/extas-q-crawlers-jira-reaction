@@ -1,0 +1,15 @@
+{
+  "name": "extas/reaction-crawlers-jira",
+  "package_classes": [
+    {
+      "class": "extas\\components\\quality\\crawlers\\jira\\indexes\\JiraReactionIndexRepository",
+      "interface": "extas\\interfaces\\quality\\crawlers\\jira\\indexes\\IJiraReactionIndexRepository"
+    }
+  ],
+  "plugins": [
+    {
+      "class": "extas\\components\\plugins\\PluginInstallJiraReactionIndex",
+      "stage": "extas.install"
+    }
+  ]
+}
