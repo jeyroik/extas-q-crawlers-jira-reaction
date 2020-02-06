@@ -57,13 +57,13 @@ class CrawlerJiraReaction extends Crawler
                 $this->resolvedTimes($resolvedTimes, $notResolved, $created, $resolved, $changeLog);
                 $itemsCount++;
             }
-            $rate = round(1 / (
-                1 + $this->median($inWorkTimes) + $this->median($resolvedTimes) + $itemsCount + $notResolved
+            $rate = round($itemsCount / (
+                1 + $this->median($inWorkTimes)/86400 + $this->median($resolvedTimes)/86400 + $itemsCount + $notResolved
             ),4);
 
             $output->writeln([
-                'Rate = 1 / (1 + ' . $this->median($inWorkTimes) . ' (reaction time) + ' .
-                $this->median($resolvedTimes) . ' (resolving time) + ' .
+                'Rate = ' . $itemsCount . ' / (1 + ' . ($this->median($inWorkTimes)/86400) . ' (reaction time) + ' .
+                ($this->median($resolvedTimes)/86400) . ' (resolving time) + ' .
                 $itemsCount . ' (issue count) + ' . $notResolved . ' (not resolved) )',
                 'Rate =  <info>' . $rate . '</info>'
             ]);
@@ -106,7 +106,7 @@ class CrawlerJiraReaction extends Crawler
             }
         }
 
-        $jql->returnFields([IJiraIssue::FIELD__CHANGELOG])
+        $jql->returnFields([IJiraIssue::FIELD__CREATED])
             ->expand([IJiraIssue::FIELD__CHANGELOG]);
 
         return $jql;
