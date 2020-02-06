@@ -58,15 +58,15 @@ class CrawlerJiraReaction extends Crawler
                 $itemsCount++;
             }
             $rate = round($itemsCount / (
-                1 + $this->median($inWorkTimes)/86400 + $this->median($resolvedTimes)/86400 + $itemsCount + $notResolved
+                1 + $this->median($inWorkTimes)/3600 + array_sum($resolvedTimes)/3600 + $notResolved
             ),4);
 
             $output->writeln([
-                'Rate = ' . $itemsCount . ' / (1 + ' . ($this->median($inWorkTimes)/86400) . ' (reaction time) + ' .
-                ($this->median($resolvedTimes)/86400) . ' (resolving time) + ' .
-                $itemsCount . ' (issue count) + ' . $notResolved . ' (not resolved) )',
+                'Rate = ' . $itemsCount . ' / (1 + ' . ($this->median($inWorkTimes)/3600) . ' (median reaction time) + ' .
+                (array_sum($resolvedTimes)/3600) . ' (total resolving time) + ' . $notResolved . ' (not resolved) )',
                 'Rate =  <info>' . $rate . '</info>'
             ]);
+            
             /**
              * @var $repo IJiraReactionRateRepository
              */
