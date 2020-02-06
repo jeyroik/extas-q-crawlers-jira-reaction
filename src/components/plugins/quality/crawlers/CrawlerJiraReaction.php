@@ -14,6 +14,7 @@ use extas\interfaces\quality\crawlers\jira\IJiraIssueChangelog;
 use extas\interfaces\quality\crawlers\jira\IJiraSearchJQL;
 use extas\interfaces\quality\crawlers\jira\reactions\IJiraReactionConfig as I;
 use extas\interfaces\quality\crawlers\jira\reactions\IJiraReactionConfigItem;
+use extas\interfaces\quality\crawlers\jira\reactions\rates\IJiraReactionRate;
 use extas\interfaces\quality\crawlers\jira\reactions\rates\IJiraReactionRateRepository;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -66,22 +67,41 @@ class CrawlerJiraReaction extends Crawler
                 (array_sum($resolvedTimes)/3600) . ' (total resolving time) + ' . $notResolved . ' (not resolved) )',
                 'Rate =  <info>' . $rate . '</info>'
             ]);
-            
-            /**
-             * @var $repo IJiraReactionRateRepository
-             */
-            $repo = SystemContainer::getItem(IJiraReactionRateRepository::class);
-            $repo->create(new JiraReactionRate([
-                JiraReactionRate::FIELD__MONTH =>date('Ym'),
-                JiraReactionRate::FIELD__TIMESTAMP => time(),
-                JiraReactionRate::FIELD__RATE => $rate
-            ]));
+
+            $this->saveRate($rate, $output);
             return $this;
 
         } catch (\Exception $e) {
             $messages = explode('\n', $e->getMessage());
             $output->writeln($messages);
             return $this;
+        }
+    }
+
+    /**
+     * @param $rate
+     * @param OutputInterface $output
+     */
+    protected function saveRate($rate, OutputInterface &$output)
+    {
+        /**
+         * @var $repo IJiraReactionRateRepository
+         * @var $exist IJiraReactionRate
+         */
+        $repo = SystemContainer::getItem(IJiraReactionRateRepository::class);
+        $exist = $repo->one([IJiraReactionRate::FIELD__MONTH => date('Ym')]);
+
+        if ($exist) {
+            $exist->setRate($rate)->setTimestamp(time());
+            $repo->update($exist);
+            $output->writeln(['Rate updated']);
+        } else {
+            $repo->create(new JiraReactionRate([
+                JiraReactionRate::FIELD__MONTH => date('Ym'),
+                JiraReactionRate::FIELD__TIMESTAMP => time(),
+                JiraReactionRate::FIELD__RATE => $rate
+            ]));
+            $output->writeln(['Rate created']);
         }
     }
 
