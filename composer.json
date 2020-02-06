@@ -1,5 +1,5 @@
 {
-  "name": "jeyroik/extas-reaction-crawlers-jira",
+  "name": "jeyroik/extas-q-crawlers-jira-reaction",
   "description": "Jira reaction crawler package",
   "require": {
     "guzzlehttp/guzzle": "^6.3",
