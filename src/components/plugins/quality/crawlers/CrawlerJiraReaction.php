@@ -50,15 +50,17 @@ class CrawlerJiraReaction extends Crawler
                 /**
                  * @var $ticket IJiraIssue
                  */
+                $output->writeln(['Operating ticket <info>' . $ticket->getKey() . '</info>']);
                 $created = $ticket->getCreated(true);
                 $changeLog = $ticket->getChangelog();
                 $this->inWorkTimes($inWorkTimes, $created, $inWork, $changeLog);
                 $this->resolvedTimes($resolvedTimes, $notResolved, $created, $resolved, $changeLog);
                 $itemsCount++;
             }
-            $rate = 1 / (
+            $rate = round(1 / (
                 1 + $this->median($inWorkTimes) + $this->median($resolvedTimes) + $itemsCount + $notResolved
-            );
+            ),4);
+            $output->writeln(['Rate =  <info>' . $rate . '</info>']);
             /**
              * @var $repo IJiraReactionRateRepository
              */
