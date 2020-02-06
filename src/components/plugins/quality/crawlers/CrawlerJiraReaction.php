@@ -53,7 +53,7 @@ class CrawlerJiraReaction extends Crawler
                 $output->writeln(['Operating ticket <info>' . $ticket->getKey() . '</info>']);
                 $created = $ticket->getCreated(true);
                 $changeLog = $ticket->getChangelog();
-                $this->inWorkTimes($inWorkTimes, $created, $inWork, $changeLog);
+                $this->inWorkTimes($inWorkTimes, $created, $inWork, $changeLog, $output);
                 $this->resolvedTimes($resolvedTimes, $notResolved, $created, $resolved, $changeLog);
                 $itemsCount++;
             }
@@ -97,7 +97,7 @@ class CrawlerJiraReaction extends Crawler
             JiraSearchJQL::DATE__END_OF_MONTH,
             -1
         );
-        
+
         $config = $this->cfg();
         if (isset($config[I::FIELD__REACTION])) {
             $r = $config[I::FIELD__REACTION];
@@ -106,7 +106,8 @@ class CrawlerJiraReaction extends Crawler
             }
         }
 
-        $jql->returnFields([IJiraIssue::FIELD__CHANGELOG]);
+        $jql->returnFields([IJiraIssue::FIELD__CHANGELOG])
+            ->expand([IJiraIssue::FIELD__CHANGELOG]);
 
         return $jql;
     }
@@ -140,19 +141,28 @@ class CrawlerJiraReaction extends Crawler
      * @param int $created
      * @param IJiraReactionConfigItem $inWork
      * @param IJiraIssueChangelog $changeLog
+     * @param OutputInterface $output
      */
     protected function inWorkTimes(
         array &$inWorkTimes,
         int $created,
         IJiraReactionConfigItem $inWork,
-        IJiraIssueChangelog $changeLog
+        IJiraIssueChangelog $changeLog,
+        OutputInterface $output
     )
     {
         $item = $changeLog->one($inWork->getFrom(), $inWork->getTo());
 
         if ($item) {
+            $output->writeln([
+                '<info>Found "in work" changelog item</info>'
+            ]);
             $inWorkTime = $item->getCreated(true);
             $inWorkTimes[] = $inWorkTime - $created;
+        } else {
+            $output->writeln([
+                '<comment>Can not find "in work" changelog item</comment>'
+            ]);
         }
     }
 
