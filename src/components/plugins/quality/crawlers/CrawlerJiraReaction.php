@@ -96,17 +96,17 @@ class CrawlerJiraReaction extends Crawler
             JiraSearchJQL::CONDITION__LOWER,
             JiraSearchJQL::DATE__END_OF_MONTH,
             -1
-            )
-            ->returnFields([IJiraIssue::FIELD__CHANGELOG]);
-
+        );
+        
         $config = $this->cfg();
-
         if (isset($config[I::FIELD__REACTION])) {
             $r = $config[I::FIELD__REACTION];
             if (isset($r[I::FIELD__PROJECTS]) && !empty($r[I::FIELD__PROJECTS])) {
                 $jql->projectKey($r[I::FIELD__PROJECTS]);
             }
         }
+
+        $jql->returnFields([IJiraIssue::FIELD__CHANGELOG]);
 
         return $jql;
     }
