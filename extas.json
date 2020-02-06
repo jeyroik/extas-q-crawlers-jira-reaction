@@ -2,14 +2,30 @@
   "name": "extas/reaction-crawlers-jira",
   "package_classes": [
     {
-      "class": "extas\\components\\quality\\crawlers\\jira\\indexes\\JiraReactionIndexRepository",
-      "interface": "extas\\interfaces\\quality\\crawlers\\jira\\indexes\\IJiraReactionIndexRepository"
+      "class": "extas\\components\\quality\\crawlers\\jira\\reactions\\rates\\JiraReactionRateRepository",
+      "interface": "extas\\interfaces\\quality\\crawlers\\jira\\reactions\\rates\\IJiraReactionRateRepository"
     }
   ],
   "plugins": [
     {
       "class": "extas\\components\\plugins\\PluginInstallJiraReactionIndex",
       "stage": "extas.install"
+    },
+    {
+      "class": "extas\\components\\plugins\\quality\\crawlers\\CrawlerJiraReaction",
+      "stage": "extas.quality.crawl"
+    },
+    {
+      "class": "extas\\components\\plugins\\quality\\crawlers\\jira\\JiraReactionConfigPlugin",
+      "stage": "extas.quality.crawlers.jira.config"
+    }
+  ],
+  "env": [
+    {
+      "title": "Quality. Jira reaction config",
+      "description": "Path to jira reaction configuration file for the quality crawler",
+      "name": "EXTAS__Q_JIRA_REACTION_PATH",
+      "value": ""
     }
   ]
 }
