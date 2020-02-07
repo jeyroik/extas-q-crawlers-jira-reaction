@@ -2,6 +2,9 @@
 namespace extas\interfaces\quality\crawlers\jira\reactions\rates;
 
 use extas\interfaces\IItem;
+use extas\interfaces\quality\crawlers\jira\IHasMonth;
+use extas\interfaces\quality\crawlers\jira\IHasRate;
+use extas\interfaces\quality\crawlers\jira\IHasTimestamp;
 
 /**
  * Interface IJiraReactionRate
@@ -9,47 +12,21 @@ use extas\interfaces\IItem;
  * @package extas\interfaces\quality\crawlers\jira\reactions\rates
  * @author jeyroik@gmail.com
  */
-interface IJiraReactionRate extends IItem
+interface IJiraReactionRate extends IItem, IHasMonth, IHasTimestamp, IHasRate
 {
     const SUBJECT = 'extas.quality.crawlers.jira.reaction';
 
-    const FIELD__MONTH = 'month';
-    const FIELD__TIMESTAMP = 'timestamp';
-    const FIELD__RATE = 'rate';
+    const FIELD__COUNT_TOTAL = 'total';
 
     /**
      * @return int
      */
-    public function getMonth(): int;
+    public function getCountTotal(): int;
 
     /**
-     * @return int
-     */
-    public function getTimestamp(): int;
-
-    /**
-     * @return float
-     */
-    public function getRate(): float;
-
-    /**
-     * @param int $month
+     * @param int $countTotal
      *
      * @return IJiraReactionRate
      */
-    public function setMonth(int $month): IJiraReactionRate;
-
-    /**
-     * @param int $timestamp
-     *
-     * @return IJiraReactionRate
-     */
-    public function setTimestamp(int $timestamp): IJiraReactionRate;
-
-    /**
-     * @param float $rate
-     *
-     * @return IJiraReactionRate
-     */
-    public function setRate(float $rate): IJiraReactionRate;
+    public function setCountTotal(int $countTotal): IJiraReactionRate;
 }

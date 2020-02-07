@@ -68,7 +68,7 @@ class CrawlerJiraReaction extends Crawler
                 'Rate =  <info>' . $rate . '</info>'
             ]);
 
-            $this->saveRate($rate, $output);
+            $this->saveRate($rate, $itemsCount, $output);
             return $this;
 
         } catch (\Exception $e) {
@@ -79,10 +79,11 @@ class CrawlerJiraReaction extends Crawler
     }
 
     /**
-     * @param $rate
+     * @param float $rate
+     * @param int $issuesCount
      * @param OutputInterface $output
      */
-    protected function saveRate($rate, OutputInterface &$output)
+    protected function saveRate($rate, int $issuesCount, OutputInterface &$output)
     {
         /**
          * @var $repo IJiraReactionRateRepository
@@ -92,14 +93,15 @@ class CrawlerJiraReaction extends Crawler
         $exist = $repo->one([IJiraReactionRate::FIELD__MONTH => date('Ym')]);
 
         if ($exist) {
-            $exist->setRate($rate)->setTimestamp(time());
+            $exist->setRate($rate)->setTimestamp(time())->setCountTotal($issuesCount);
             $repo->update($exist);
             $output->writeln(['Rate updated']);
         } else {
             $repo->create(new JiraReactionRate([
                 JiraReactionRate::FIELD__MONTH => date('Ym'),
                 JiraReactionRate::FIELD__TIMESTAMP => time(),
-                JiraReactionRate::FIELD__RATE => $rate
+                JiraReactionRate::FIELD__RATE => $rate,
+                JiraReactionRate::FIELD__COUNT_TOTAL => $issuesCount
             ]));
             $output->writeln(['Rate created']);
         }
