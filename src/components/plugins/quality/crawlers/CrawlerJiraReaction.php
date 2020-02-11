@@ -89,8 +89,9 @@ class CrawlerJiraReaction extends Crawler
          * @var $repo IJiraReactionRateRepository
          * @var $exist IJiraReactionRate
          */
+        $month = (int) date('Ym');
         $repo = SystemContainer::getItem(IJiraReactionRateRepository::class);
-        $exist = $repo->one([IJiraReactionRate::FIELD__MONTH => date('Ym')]);
+        $exist = $repo->one([IJiraReactionRate::FIELD__MONTH => $month]);
 
         if ($exist) {
             $exist->setRate($rate)->setTimestamp(time())->setCountTotal($issuesCount);
@@ -98,7 +99,7 @@ class CrawlerJiraReaction extends Crawler
             $output->writeln(['Rate updated']);
         } else {
             $repo->create(new JiraReactionRate([
-                JiraReactionRate::FIELD__MONTH => date('Ym'),
+                JiraReactionRate::FIELD__MONTH => $month,
                 JiraReactionRate::FIELD__TIMESTAMP => time(),
                 JiraReactionRate::FIELD__RATE => $rate,
                 JiraReactionRate::FIELD__COUNT_TOTAL => $issuesCount
