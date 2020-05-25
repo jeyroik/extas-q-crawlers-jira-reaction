@@ -14,9 +14,9 @@ use extas\interfaces\quality\crawlers\jira\IHasTimestamp;
  */
 interface IJiraReactionRate extends IItem, IHasMonth, IHasTimestamp, IHasRate
 {
-    const SUBJECT = 'extas.quality.crawlers.jira.reaction';
+    public const SUBJECT = 'extas.quality.crawlers.jira.reaction';
 
-    const FIELD__COUNT_TOTAL = 'total';
+    public const FIELD__COUNT_TOTAL = 'total';
 
     /**
      * @return int

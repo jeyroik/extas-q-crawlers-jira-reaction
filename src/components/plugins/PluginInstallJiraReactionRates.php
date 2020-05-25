@@ -12,9 +12,9 @@ use extas\interfaces\quality\crawlers\jira\reactions\rates\IJiraReactionRateRepo
  */
 class PluginInstallJiraReactionRates extends PluginInstallDefault
 {
-    protected $selfUID = JiraReactionRate::FIELD__MONTH;
-    protected $selfRepositoryClass = IJiraReactionRateRepository::class;
-    protected $selfSection = 'jira_reaction_rates';
-    protected $selfName = 'jira reaction rate';
-    protected $selfItemClass = JiraReactionRate::class;
+    protected string $selfUID = JiraReactionRate::FIELD__MONTH;
+    protected string $selfRepositoryClass = IJiraReactionRateRepository::class;
+    protected string $selfSection = 'jira_reaction_rates';
+    protected string $selfName = 'jira reaction rate';
+    protected string $selfItemClass = JiraReactionRate::class;
 }

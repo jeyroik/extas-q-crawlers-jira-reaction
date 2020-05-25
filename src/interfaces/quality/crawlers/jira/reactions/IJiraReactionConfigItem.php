@@ -11,10 +11,10 @@ use extas\interfaces\IItem;
  */
 interface IJiraReactionConfigItem extends IItem
 {
-    const SUBJECT = 'extas.quality.crawler.jira.reaction.config.item';
+    public const SUBJECT = 'extas.quality.crawler.jira.reaction.config.item';
 
-    const FIELD__FROM = 'from';
-    const FIELD__TO = 'to';
+    public const FIELD__FROM = 'from';
+    public const FIELD__TO = 'to';
 
     /**
      * @return string

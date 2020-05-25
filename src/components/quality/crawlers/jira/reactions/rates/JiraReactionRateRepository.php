@@ -12,9 +12,8 @@ use extas\interfaces\quality\crawlers\jira\reactions\rates\IJiraReactionRateRepo
  */
 class JiraReactionRateRepository extends Repository implements IJiraReactionRateRepository
 {
-    protected $itemClass = JiraReactionRate::class;
-    protected $name = 'jira_reaction_rates';
-    protected $pk = JiraReactionRate::FIELD__MONTH;
-    protected $scope = 'extas';
-    protected $idAs = '';
+    protected string $itemClass = JiraReactionRate::class;
+    protected string $name = 'jira_reaction_rates';
+    protected string $pk = JiraReactionRate::FIELD__MONTH;
+    protected string $scope = 'extas';
 }

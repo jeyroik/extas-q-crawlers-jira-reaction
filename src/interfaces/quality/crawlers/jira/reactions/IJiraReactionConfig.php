@@ -9,10 +9,10 @@ namespace extas\interfaces\quality\crawlers\jira\reactions;
  */
 interface IJiraReactionConfig
 {
-    const FIELD__REACTION = 'reaction';
-    const FIELD__PROJECTS = 'projects';
-    const FIELD__IN_WORK = 'in_work';
-    const FIELD__RESOLVED = 'resolved';
-    const FIELD__FROM = 'from';
-    const FIELD__TO = 'to';
+    public const FIELD__REACTION = 'reaction';
+    public const FIELD__PROJECTS = 'projects';
+    public const FIELD__IN_WORK = 'in_work';
+    public const FIELD__RESOLVED = 'resolved';
+    public const FIELD__FROM = 'from';
+    public const FIELD__TO = 'to';
 }
