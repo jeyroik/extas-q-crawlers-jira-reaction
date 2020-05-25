@@ -28,8 +28,8 @@ class CrawlerJiraReaction extends Crawler
 {
     use TJiraConfiguration;
 
-    protected $title = '[Jira] Reaction index';
-    protected $description = 'Calculate reaction index.';
+    protected string $title = '[Jira] Reaction index';
+    protected string $description = 'Calculate reaction index.';
 
     /**
      * @param OutputInterface $output
