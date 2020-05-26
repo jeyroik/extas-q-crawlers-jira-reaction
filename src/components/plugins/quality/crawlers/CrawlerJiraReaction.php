@@ -7,7 +7,6 @@ use extas\components\quality\crawlers\jira\JiraSearchJQL;
 use extas\components\quality\crawlers\jira\reactions\JiraReactionConfigItem;
 use extas\components\quality\crawlers\jira\reactions\rates\JiraReactionRate;
 use extas\components\quality\crawlers\jira\TJiraConfiguration;
-use extas\components\SystemContainer;
 use extas\interfaces\quality\crawlers\ICrawler;
 use extas\interfaces\quality\crawlers\jira\IJiraIssue;
 use extas\interfaces\quality\crawlers\jira\IJiraIssueChangelog;
@@ -20,6 +19,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class CrawlerJiraReaction
+ *
+ * @method jiraReactionRateRepository()
  *
  * @package extas\components\plugins\quality\crawlers
  * @author jeyroik@gmail.com
@@ -90,7 +91,7 @@ class CrawlerJiraReaction extends Crawler
          * @var $exist IJiraReactionRate
          */
         $month = (int) date('Ym');
-        $repo = SystemContainer::getItem(IJiraReactionRateRepository::class);
+        $repo = $this->jiraReactionRateRepository();
         $exist = $repo->one([IJiraReactionRate::FIELD__MONTH => $month]);
 
         if ($exist) {
